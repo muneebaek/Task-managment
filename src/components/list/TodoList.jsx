@@ -1,11 +1,10 @@
 import React from "react";
 
-export const TodoList = ({ tasks, onDelete }) => {
+export const TodoList = ({ tasks, onToggle, onDelete }) => {
   return (
     <>
       <div className="bg-white shadow-md rounded-2xl p-4 w-full max-w-md mx-auto mt-6">
         <h1 className="text-xl font-semibold mb-4 text-center">MY TASKS</h1>
-
         {tasks.length === 0 ? (
           <p className="text-gray-500 text-center">No tasks yet!</p>
         ) : (
@@ -13,9 +12,26 @@ export const TodoList = ({ tasks, onDelete }) => {
             {tasks.map((task, index) => (
               <li
                 key={index}
-                className="flex justify-between items-center bg-gray-100 rounded-xl px-4 py-2 shadow-sm"
+                className="relative bg-gray-100 rounded-xl px-4 py-2 shadow-sm flex items-center"
               >
-                <span>{task}</span>
+                {/* ✅ Checkbox Left */}
+                <input
+                  type="checkbox"
+                  checked={task.completed}
+                  onChange={() => onToggle(index)}
+                  className="w-5 h-5 absolute left-4"
+                />
+
+                {/* ✅ Task Text Center */}
+                <span
+                  className={`mx-auto text-center ${
+                    task.completed
+                      ? "line-through text-gray-400"
+                      : "text-gray-700"
+                  }`}
+                >
+                  {task.text}
+                </span>
 
                 <button
                   onClick={() => onDelete(index)}

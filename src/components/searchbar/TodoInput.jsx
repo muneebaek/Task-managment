@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 
-export const SearchBar = ({ task, setTask,  tasks, setTasks }) => {
+export const SearchBar = ({ task, setTask, tasks, setTasks }) => {
   const addTask = () => {
     if (task.trim() === "") return;
-    setTasks([...tasks, task]);
+    setTasks([...tasks, { text: task, completed: false }]);
     setTask("");
   };
-  
-    const handleKeyDown =(e) => {
-      if(e.key === "Enter") {
-        addTask();
-      }
-    };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      addTask();
+    }
+  };
   return (
     <>
       <div className="flex">
