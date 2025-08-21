@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 import "../signup&signin/login.css";
 import Input from "../../components/Input/CustomInput";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,9 +6,6 @@ import * as Yup from "yup";
 import { Form, Formik } from "formik";
 
 export const Login = () => {
-  const [username, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
   const navigate = useNavigate();
 
   const LoginSchema = Yup.object().shape({
@@ -30,7 +27,7 @@ export const Login = () => {
               remember: false,
             }}
             validationSchema={LoginSchema}
-            onSubmit={(values) => {
+            onSubmit={(values) => { 
               if (
                 values.username === "admin" &&
                 values.password === "qwER12@"

@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import "../signup&signin/signUp.css";
 import Input from "../../components/Input/CustomInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 
 export const SignUp = () => {
-  const [username, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const SignUpSchema = Yup.object().shape({
     username: Yup.string()
@@ -48,9 +46,10 @@ export const SignUp = () => {
               password: "",
             }}
             validationSchema={SignUpSchema}
-            onSubmit={(values,errors) => {
+            onSubmit={(values, errors) => {
               console.log(values);
-              console.log(errors)
+              console.log(errors);
+              navigate("/login");
             }}
           >
             {({ errors, touched, values, handleChange, isSubmitting }) => (

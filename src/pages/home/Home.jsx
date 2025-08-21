@@ -1,57 +1,112 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { SearchBar } from "../../components/searchbar/TodoInput";
-import { useState } from "react";
-import { TodoList } from "../../components/list/TodoList";
+import React, { useState } from "react";
 import "../home/home.css";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
+import { AiOutlineEdit } from "react-icons/ai";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 export const Home = () => {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [editId, setEditId] = useState(0);
 
-  const deleteTask = (index) => {
-    setTasks(tasks.filter((_, i) => i !== index));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("this is handle submit");
   };
 
   const addTask = () => {
-    if (task.trim() === "") return;
-    setTasks([...tasks, { text: task, completed: false }]);
+    if(task.trim() !== ""){
+      setTasks([...tasks, { list: task, id: Date.now(), status: false }]);
+    console.log(tasks);
     setTask("");
+    }
+
+  if(editId){
+    const editListTask = tasks.find((data) => data.id === editId)
+    const editUpdate = tasks.map((data) => data.id ===editListTask.id
+   ? (data = {id : data.id, list :task})
+   : (data = {id : data.id , list :data.list}))
+
+   setTasks(editUpdate);
+   setEditId(0);
+   setTask("")
+  }
   };
 
-  const toggleTask = (index) => {
-    const updated = [...tasks];
-    updated[index].completed = !updated[index].completed;
-    setTasks(updated);
+  const onComplete = (id) => {
+    const complete = tasks.map((data) => {
+      if (data.id === id) {
+        return { ...data, status: !data.status };
+      }
+      return data;
+    });
+    setTasks(complete);
+  };
+
+  const onEdit = (id) => {
+    const editTask = tasks.find((data) => data.id === id);
+    setTask(editTask.list);
+    setEditId(editTask.id);
+  };
+
+  const onDelete = (id) => {
+    setTasks(tasks.filter((data) => data.id !== id));
   };
 
   return (
     <>
-      <header className="w-full bg-purple-700">
-        <div className="container grid grid-cols-1 md:grid-cols-2 px-30 py-3 items-center">
-          <div className="logo text-5xl font-bold text-stone-200">TODO APP</div>
+      <div className="home">
+        <div className="container">
+          <h2 className="todo-title">TODO APP</h2>
 
-          <div className="nav ms-60">
-            <nav className=" text-stone-200 font-semibold text-2xl hover:text-stone-400 ">
-              <Link to="/signup">Sign Up</Link>
-            </nav>
+          <form className="todo-form" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              value={task}
+              placeholder="Enter Todos..."
+              onChange={(e) => setTask(e.target.value)}
+            />
+            <button type="submit" onClick={addTask}>
+              {editId ? "EDIT" : 'ADD'}
+            </button>
+          </form>
+
+          <div className="list">
+            <ul>
+              {tasks.map((datas, index) => (
+                <li className="list-items">
+                  <div
+                    className="task-items"
+                    key={index}
+                    id={datas.status ? "data-items" : ""}
+                  >
+                    {datas.list}
+                  </div>
+
+                  <span className="d-inline-block-svg">
+                    <IoCheckmarkCircleOutline
+                      className="list-icons"
+                      id="complete"
+                      title="Complete"
+                      onClick={() => onComplete(datas.id)}
+                    />
+                    <AiOutlineEdit
+                      className="list-icons"
+                      id="edit"
+                      title="Edit"
+                      onClick={() => onEdit(datas.id)}
+                    />
+                    <RiDeleteBin6Line
+                      className="list-icons"
+                      id="delete"
+                      title="Delete"
+                      onClick={() => onDelete(datas.id)}
+                    />
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-      </header>
-
-      <div className="pt-10 grid grid-cols-1 items-center">
-        <div className=" w-[600px] mx-auto px-4">
-          <SearchBar
-            task={task}
-            setTask={setTask}
-            tasks={tasks}
-            setTasks={setTasks}
-            addTask={addTask}
-          />
-        </div>
-
-        <div>
-          <TodoList tasks={tasks}  onDelete={deleteTask} onToggle={toggleTask} />
         </div>
       </div>
     </>

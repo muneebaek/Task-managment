@@ -1,3 +1,112 @@
-body {
-     background-color: oklab(87.381% 0.00105 0.00022);
+.home {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background-color: #5406c9;
+  width: 500px;
+  height: auto;
+  margin-top: 100px;
+  padding: 30px;
+  border: none;
+  border-radius: 10px;
+}
+
+.container .todo-title {
+  color: #fff;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.container .todo-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+
+.container .todo-form input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+  transition: 0.3s;
+  background-color: #fff;
+}
+
+.container .todo-form input:focus {
+  box-shadow: 2px 4px 5px rgba(57, 56, 59, 0.4);
+}
+
+.container .todo-form button {
+  width: 50px;
+  height: 45px;
+  border: none;
+  border-radius: 6px;
+  background: #efeff1;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.container .todo-form button:hover {
+  background-color: gray;
+  color: #fff;
+}
+
+.container .list {
+  margin-top: 50px;
+}
+
+.container .list li {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 10px;
+  list-style: none;
+}
+
+/* d-inline-block-svg */
+.d-inline-block-svg svg {
+  display: inline-block;
+}
+
+.list .list-items {
+  display: flex;
+}
+
+.list .list-items .task-items {
+  flex: 1;
+}
+
+#data-items {
+  text-decoration: line-through;
+  color: #9e9b9b;
+}
+
+.list .list-items .list-icons {
+  margin-left: 15px;
+  font-size: 18px;
+}
+
+#complete {
+  color: rgb(32, 134, 32);
+}
+
+#edit {
+  color: blue;
+}
+
+#delete {
+  color: red;
 }
